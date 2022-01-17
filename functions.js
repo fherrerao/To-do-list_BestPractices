@@ -1,26 +1,26 @@
 const listContainer = document.querySelector('.list-container');
 const itemsContainer = document.querySelector('.list-container');
 
-export default class Collection {
+export default class ToDoCollection {
   static tasks = [];
 
   static createTask = (task) => {
     const objTasks = {
       description: task,
       completed: false,
-      index: Collection.tasks.length + 1,
+      index: this.tasks.length + 1,
     };
-    Collection.tasks.push(objTasks);
+    this.tasks.push(objTasks);
     return objTasks;
   };
 
   static showTasks = () => {
     listContainer.innerHTML = '';
-    Collection.tasks = JSON.parse(localStorage.getItem('tasks'));
-    if (!Collection.tasks) {
-      Collection.tasks = [];
+    ToDoCollection.tasks = JSON.parse(localStorage.getItem('tasks'));
+    if (!ToDoCollection.tasks) {
+      ToDoCollection.tasks = [];
     } else {
-      Collection.tasks.forEach((element) => {
+      ToDoCollection.tasks.forEach((element) => {
         const items = document.createElement('li');
         items.classList.add('item-list');
         items.id = element.index - 1;
@@ -36,17 +36,17 @@ export default class Collection {
 
   static deleteTask = (del) => {
     let indexArray;
-    Collection.tasks.forEach((element, index) => {
+    ToDoCollection.tasks.forEach((element, index) => {
       if (element.description === del) {
         indexArray = index;
       }
     });
-    Collection.tasks.splice(indexArray, 1);
-    Collection.setLocalStorage();
+    ToDoCollection.tasks.splice(indexArray, 1);
+    ToDoCollection.setLocalStorage();
     window.location.reload();
   };
 
   static setLocalStorage = () => {
-    localStorage.setItem('tasks', JSON.stringify(Collection.tasks));
+    localStorage.setItem('tasks', JSON.stringify(ToDoCollection.tasks));
   };
 }
